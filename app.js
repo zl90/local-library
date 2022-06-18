@@ -7,8 +7,12 @@ var logger = require("morgan");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 const catalogRouter = require("./routes/catalog");
+const helmet = require("helmet");
 
 var app = express();
+
+// Helmet helps protect your app from well-known web vulnerabilities.
+app.use(helmet());
 
 // Set up Mongoose connection
 const mongoose = require("mongoose");
