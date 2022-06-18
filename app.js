@@ -3,7 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
+var dotenv = require("dotenv/config");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 const catalogRouter = require("./routes/catalog");
@@ -16,8 +16,9 @@ app.use(helmet());
 
 // Set up Mongoose connection
 const mongoose = require("mongoose");
-const mongoDB =
-  "mongodb+srv://zl95:lol123@cluster0.mgj4u2b.mongodb.net/local_library?retryWrites=true&w=majority"; // connection string
+var dev_db_url =
+  "mongodb+srv://zl95:lol123@cluster0.mgj4u2b.mongodb.net/local_library?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI || dev_db_url; // connection string is stored in environment
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true }); // Sets up the default db connection.
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error: ")); // Allows db errors to be printed to console.
